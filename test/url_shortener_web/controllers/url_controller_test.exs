@@ -5,7 +5,7 @@ defmodule UrlShortenerWeb.UrlControllerTest do
   alias UrlShortener.UrlShortenerContext.Url
 
   @create_attrs %{
-    original: "some original",
+    original: "https://crouton.net",
     shortened: "some shortened"
   }
   @update_attrs %{
@@ -39,7 +39,7 @@ defmodule UrlShortenerWeb.UrlControllerTest do
 
       assert %{
                "id" => id,
-               "original" => "some original",
+               "original" => "https://crouton.net",
                "shortened" => "some shortened"
              } = json_response(conn, 200)["data"]
     end
