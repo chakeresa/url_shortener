@@ -14,5 +14,7 @@ defmodule UrlShortener.UrlShortenerContext.Url do
     url
     |> cast(attrs, [:original, :shortened])
     |> validate_required([:original, :shortened])
+    |> unique_constraint(:original)
+    |> unique_constraint(:shortened)
   end
 end

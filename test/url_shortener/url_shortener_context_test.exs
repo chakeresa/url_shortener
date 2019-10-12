@@ -35,6 +35,22 @@ defmodule UrlShortener.UrlShortenerContextTest do
       assert url.shortened == "some shortened"
     end
 
+    test "create_url/1 with duplicate original url returns error changeset" do
+      attrs1 = %{original: 'original1', shortened: 'shortened1'}
+      UrlShortenerContext.create_url(attrs1)
+      attrs2 = %{original: 'original1', shortened: 'shortened2'}
+
+      assert {:error, %Ecto.Changeset{}} = UrlShortenerContext.create_url(attrs2)
+    end
+
+    test "create_url/1 with duplicate shortened url returns error changeset" do
+      attrs1 = %{original: 'original1', shortened: 'shortened1'}
+      UrlShortenerContext.create_url(attrs1)
+      attrs2 = %{original: 'original2', shortened: 'shortened1'}
+
+      assert {:error, %Ecto.Changeset{}} = UrlShortenerContext.create_url(attrs2)
+    end
+
     test "create_url/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = UrlShortenerContext.create_url(@invalid_attrs)
     end
