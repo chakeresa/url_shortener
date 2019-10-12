@@ -42,7 +42,8 @@ defmodule UrlShortenerWeb.UrlController do
   end
 
   def redirect_to_long_url(conn, %{"shortened_url" => shortened_url}) do
-    conn
-    |> redirect(external: UrlShortenerContext.get_long_url(shortened_url))
+    long_url = UrlShortenerContext.get_long_url(shortened_url)
+
+    redirect(conn, external: long_url)
   end
 end
