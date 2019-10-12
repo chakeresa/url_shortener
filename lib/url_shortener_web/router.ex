@@ -10,4 +10,8 @@ defmodule UrlShortenerWeb.Router do
 
     resources "/urls", UrlController
   end
+
+  scope "/redirect", UrlShortenerWeb do
+    get ":shortened_url", UrlController, :redirect_to_long_url
+  end
 end

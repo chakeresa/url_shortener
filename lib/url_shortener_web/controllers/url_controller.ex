@@ -40,4 +40,9 @@ defmodule UrlShortenerWeb.UrlController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def redirect_to_long_url(conn, %{"shortened_url" => shortened_url}) do
+    conn
+    |> redirect(external: UrlShortenerContext.get_long_url(shortened_url))
+  end
 end

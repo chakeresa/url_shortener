@@ -85,6 +85,16 @@ defmodule UrlShortenerWeb.UrlControllerTest do
     end
   end
 
+  describe "redirect to long url" do
+    setup [:create_url]
+
+    test "redirects to the long url given the short url", %{conn: conn, url: url} do
+      conn = get(conn, Routes.url_path(conn, :redirect_to_long_url, url.shortened))
+
+      assert redirected_to(conn, 302) =~ url.original
+    end
+  end
+
   defp create_url(_) do
     url = fixture(:url)
     {:ok, url: url}
