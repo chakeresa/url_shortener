@@ -105,8 +105,10 @@ defmodule UrlShortener.UrlShortenerContext do
   @spec get_long_url(shortened_url :: String.t()) :: String.t()
   def get_long_url(shortened_url) do
     {:ok, original_url} =
-      Repo.get_by(Url, shortened: shortened_url)
-      |> Map.fetch(:original)
+      LinkCache.Cache.fetch(shortened_url, fn ->
+        Repo.get_by!(Url, shortened: shortened_url)
+        |> Map.fetch(:original)
+      end)
 
     original_url
   end

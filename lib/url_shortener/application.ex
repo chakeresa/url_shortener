@@ -11,9 +11,10 @@ defmodule UrlShortener.Application do
       # Start the Ecto repository
       UrlShortener.Repo,
       # Start the endpoint when the application starts
-      UrlShortenerWeb.Endpoint
+      UrlShortenerWeb.Endpoint,
       # Starts a worker by calling: UrlShortener.Worker.start_link(arg)
       # {UrlShortener.Worker, arg},
+      {LinkCache.Supervisor, []}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

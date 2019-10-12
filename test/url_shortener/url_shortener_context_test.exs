@@ -6,7 +6,7 @@ defmodule UrlShortener.UrlShortenerContextTest do
   describe "urls" do
     alias UrlShortener.UrlShortenerContext.Url
 
-    @valid_attrs %{original: "some original", shortened: "some shortened"}
+    @valid_attrs %{original: "https://crouton.net", shortened: "some shortened"}
     @update_attrs %{original: "some updated original", shortened: "some updated shortened"}
     @invalid_attrs %{original: nil, shortened: nil}
 
@@ -31,7 +31,7 @@ defmodule UrlShortener.UrlShortenerContextTest do
 
     test "create_url/1 with valid data creates a url" do
       assert {:ok, %Url{} = url} = UrlShortenerContext.create_url(@valid_attrs)
-      assert url.original == "some original"
+      assert url.original == "https://crouton.net"
       assert url.shortened == "some shortened"
     end
 
