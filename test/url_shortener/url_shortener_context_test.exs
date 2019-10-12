@@ -78,5 +78,12 @@ defmodule UrlShortener.UrlShortenerContextTest do
       url = url_fixture()
       assert %Ecto.Changeset{} = UrlShortenerContext.change_url(url)
     end
+
+    test "get_long_url/1 returns the long url given the short url" do
+      url = url_fixture()
+      {:ok, short_url} = Map.fetch(url, :shortened)
+      {:ok, long_url} = Map.fetch(url, :original)
+      assert UrlShortenerContext.get_long_url(short_url) == long_url
+    end
   end
 end

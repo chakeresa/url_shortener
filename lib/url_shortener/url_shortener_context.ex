@@ -101,4 +101,13 @@ defmodule UrlShortener.UrlShortenerContext do
   def change_url(%Url{} = url) do
     Url.changeset(url, %{})
   end
+
+  @spec get_long_url(shortened_url :: String.t()) :: String.t()
+  def get_long_url(shortened_url) do
+    {:ok, original_url} =
+      Repo.get_by(Url, shortened: shortened_url)
+      |> Map.fetch(:original)
+
+    original_url
+  end
 end
