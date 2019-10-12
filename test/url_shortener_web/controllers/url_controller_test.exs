@@ -9,7 +9,7 @@ defmodule UrlShortenerWeb.UrlControllerTest do
     shortened: "some shortened"
   }
   @update_attrs %{
-    original: "some updated original",
+    original: "https://en.wikipedia.org/wiki/Cat",
     shortened: "some updated shortened"
   }
   @invalid_attrs %{original: nil, shortened: nil}
@@ -61,7 +61,7 @@ defmodule UrlShortenerWeb.UrlControllerTest do
 
       assert %{
                "id" => id,
-               "original" => "some updated original",
+               "original" => "https://en.wikipedia.org/wiki/Cat",
                "shortened" => "some updated shortened"
              } = json_response(conn, 200)["data"]
     end

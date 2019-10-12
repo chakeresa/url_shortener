@@ -7,7 +7,10 @@ defmodule UrlShortener.UrlShortenerContextTest do
     alias UrlShortener.UrlShortenerContext.Url
 
     @valid_attrs %{original: "https://crouton.net", shortened: "some shortened"}
-    @update_attrs %{original: "some updated original", shortened: "some updated shortened"}
+    @update_attrs %{
+      original: "https://en.wikipedia.org/wiki/Cat",
+      shortened: "some updated shortened"
+    }
     @invalid_attrs %{original: nil, shortened: nil}
 
     def url_fixture(attrs \\ %{}) do
@@ -36,19 +39,25 @@ defmodule UrlShortener.UrlShortenerContextTest do
     end
 
     test "create_url/1 with duplicate original url returns error changeset" do
-      attrs1 = %{original: 'original1', shortened: 'shortened1'}
+      attrs1 = %{original: "https://crouton.net", shortened: "shortened1"}
       UrlShortenerContext.create_url(attrs1)
-      attrs2 = %{original: 'original1', shortened: 'shortened2'}
+      attrs2 = %{original: "https://crouton.net", shortened: "shortened2"}
 
       assert {:error, %Ecto.Changeset{}} = UrlShortenerContext.create_url(attrs2)
     end
 
     test "create_url/1 with duplicate shortened url returns error changeset" do
-      attrs1 = %{original: 'original1', shortened: 'shortened1'}
+      attrs1 = %{original: "https://crouton.net", shortened: "shortened1"}
       UrlShortenerContext.create_url(attrs1)
-      attrs2 = %{original: 'original2', shortened: 'shortened1'}
+      attrs2 = %{original: "https://en.wikipedia.org/wiki/Cat", shortened: "shortened1"}
 
       assert {:error, %Ecto.Changeset{}} = UrlShortenerContext.create_url(attrs2)
+    end
+
+    test "create_url/1 with invalid original url returns error changeset" do
+      attrs = %{original: "some original url", shortened: "some shortened url"}
+
+      assert {:error, %Ecto.Changeset{}} = UrlShortenerContext.create_url(attrs)
     end
 
     test "create_url/1 with invalid data returns error changeset" do
@@ -58,7 +67,7 @@ defmodule UrlShortener.UrlShortenerContextTest do
     test "update_url/2 with valid data updates the url" do
       url = url_fixture()
       assert {:ok, %Url{} = url} = UrlShortenerContext.update_url(url, @update_attrs)
-      assert url.original == "some updated original"
+      assert url.original == "https://en.wikipedia.org/wiki/Cat"
       assert url.shortened == "some updated shortened"
     end
 
